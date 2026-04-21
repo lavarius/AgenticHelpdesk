@@ -7,6 +7,11 @@ datasource db {
   provider = "postgresql"
 }
 
+enum Role {
+  admin
+  agent
+}
+
 model user {
   id            String    @id
   name          String
@@ -15,6 +20,7 @@ model user {
   image         String?
   createdAt     DateTime
   updatedAt     DateTime
+  role          Role      @default(agent)
   sessions      session[]
   accounts      account[]
 

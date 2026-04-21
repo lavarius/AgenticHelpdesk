@@ -20,5 +20,8 @@ Thumbs.db
 .vscode/
 .idea/
 
+# Claude Code
+.claude/settings.local.json
+
 # bun
 bun.lock
