@@ -1,30 +1,21 @@
-import { useEffect, useState } from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
+import LoginPage from "./pages/LoginPage";
+import HomePage from "./pages/HomePage";
+import ProtectedRoute from "./components/ProtectedRoute";
 
-function App() {
-  const [status, setStatus] = useState<string>("Checking...");
-
-  useEffect(() => {
-    fetch("/api/health")
-      .then((res) => res.json())
-      .then((data) => setStatus(data.status))
-      .catch(() => setStatus("Error connecting to server"));
-  }, []);
-
+export default function App() {
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center gap-4">
-      <h1 className="text-4xl font-bold text-gray-900">Agentic Helpdesk</h1>
-      <p className="text-lg text-gray-600">
-        Server status:{" "}
-        <span
-          className={
-            status === "ok" ? "text-green-600 font-semibold" : "text-red-600 font-semibold"
-          }
-        >
-          {status}
-        </span>
-      </p>
-    </div>
+    <Routes>
+      <Route path="/login" element={<LoginPage />} />
+      <Route
+        path="/"
+        element={
+          <ProtectedRoute>
+            <HomePage />
+          </ProtectedRoute>
+        }
+      />
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
   );
 }
-
-export default App;
